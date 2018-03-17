@@ -13,7 +13,10 @@
 
 @interface MainScreenCell : UITableViewCell
 
-@property (nonatomic, strong, readonly) NSString *friendName;
+/**
+ To set cell's data use fillCellWithData method
+ */
+@property (nonatomic, strong, readonly) FriendData *data;
 
 - (void)fillCellWithData:(FriendData *)friendEntity;
 

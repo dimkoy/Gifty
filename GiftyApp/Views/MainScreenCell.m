@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *giftButton;
 @property (weak, nonatomic) IBOutlet UILabel *alreadyValueLabel;
 
+@property (nonatomic, strong) FriendData *data;
+
 @end
 
 @implementation MainScreenCell
@@ -46,8 +48,15 @@
     [self.progressGift setThumbImage:image forState:UIControlStateNormal];
     [self.progressGift setMinimumTrackTintColor:UIColor.greenColor];
     [self.progressGift setMaximumTrackTintColor:UIColor.grayColor];
-    
+    self.progressGift.userInteractionEnabled = false;
     self.friendImageView.image = [UIImage imageNamed:@"friend_image"];
+}
+
+#pragma mark - Interface
+
+- (FriendData *)data
+{
+    return _data;
 }
 
 - (void)fillCellWithData:(FriendData *)friendEntity
@@ -77,7 +86,8 @@
     
     if (animated)
     {
-        [UIView animateWithDuration:0.3 animations:^{
+        [UIView animateWithDuration:0.3
+                         animations:^{
             [self layoutIfNeeded];
         }];
     }
@@ -85,14 +95,12 @@
     {
         [self layoutIfNeeded];
     }
-    
 }
 
 - (void)hideGifts
 {
     self.giftView.hidden = true;
     self.giftViewConstraint.constant = 0;
-    
     
     [self layoutIfNeeded];
 }

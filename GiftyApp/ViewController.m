@@ -14,8 +14,9 @@
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, weak) IBOutlet UITableView *friendsList;
+
 @property (nonatomic, strong) NSArray *friendsArray;
-           
+@property (nonatomic, strong) FriendData *activeFriend;
 
 @end
 
@@ -25,6 +26,7 @@
 {
     [super viewDidLoad];
     
+    self.activeFriend = nil;
     self.friendsArray = [FriendData defaultFriends];
 }
 
@@ -43,6 +45,15 @@
     FriendData *friend = self.friendsArray[indexPath.row];
     
     [cell fillCellWithData:friend];
+    
+    if (friend == self.activeFriend)
+    {
+        [cell showGiftsAnimated:true];
+    }
+    else
+    {
+        [cell hideGifts];
+    }
     
     return cell;
 }
@@ -64,47 +75,60 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FriendData *friendName = self.friendsArray[indexPath.row];
-    
-    for (MainScreenCell *cell in self.friendsList.visibleCells)
+    if (self.activeFriend == self.friendsArray[indexPath.row])
     {
-        if (![cell.friendName isEqualToString:friendName.name])
-        {
-            [cell hideGifts];
-        }
-        else
-        {
-            [cell showGiftsAnimated:true];
-        }
+        return;
     }
     
-    [self.friendsList reloadData];
+    self.activeFriend = self.friendsArray[indexPath.row];
     
-    [self.friendsList scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:true];
-    
+    [UIView transitionWithView:self.friendsList
+                      duration:0.0
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^
+    {
+                        
+                        [self.friendsList reloadData];
+                        [self.friendsList layoutIfNeeded];
+                        
+    }
+                    completion:^(BOOL finished)
+    {
+                        [self.friendsList scrollToRowAtIndexPath:indexPath
+                                                atScrollPosition:UITableViewScrollPositionTop
+                                                        animated:true];
+    }];
 }
 - (IBAction)pushNotification:(UIBarButtonItem *)sender
 {
+    // This use just for show how push notification will work in complete application
+    
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(5, -106, 310, 106)];
-        view.image = [UIImage imageNamed:@"Notification"];
-//        UIGestureRecognizer *gesture = [UIGestureRecognizer init];
-//        gestur = [gesture initWithTarget:view action:@selector(showGiftScreen)];
-        UITapGestureRecognizer *gestur = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showGiftScreen)];
-        [view addGestureRecognizer:gestur];
-        
-        
-        [[UIApplication sharedApplication].windows.firstObject addSubview:view];
-        CGRect newFrame = CGRectMake(5, 10, 310, 106);
-        
-        [UIView animateWithDuration:0.3
-                              delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.8 options:UIViewAnimationOptionCurveEaseIn animations:^
-         {
-             view.frame = newFrame;
-         }
-                         completion:nil];
-    });
+    dispatch_once(&onceToken, ^
+                  {
+                      UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(5, -106, 310, 106)];
+                      
+                      view.image = [UIImage imageNamed:@"Notification"];
+                      
+                      UITapGestureRecognizer *gestur = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showGiftScreen)];
+                      
+                      [view addGestureRecognizer:gestur];
+                      
+                      [[UIApplication sharedApplication].windows.firstObject addSubview:view];
+                      
+                      CGRect newFrame = CGRectMake(5, 10, 310, 106);
+                      
+                      [UIView animateWithDuration:0.3
+                                            delay:0.0
+                           usingSpringWithDamping:0.7
+                            initialSpringVelocity:0.8
+                                          options:UIViewAnimationOptionCurveEaseIn
+                                       animations:^
+                       {
+                           view.frame = newFrame;
+                       }
+                                       completion:nil];
+                  });
  }
 
 - (void)showGiftScreen
