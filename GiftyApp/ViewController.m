@@ -10,13 +10,22 @@
 #import "FriendData.h"
 #import "Gift.h"
 #import "MainScreenCell.h"
+#import "DataManager.h"
+#import "DataManagerDelegate.h"
 
-@interface ViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ViewController ()
+<
+    UITableViewDelegate,
+    UITableViewDataSource,
+    DataManagerDelegate
+>
 
 @property (nonatomic, weak) IBOutlet UITableView *friendsList;
 
 @property (nonatomic, strong) NSArray *friendsArray;
 @property (nonatomic, strong) FriendData *activeFriend;
+
+@property (nonatomic, strong) DataManager *dataManager;
 
 @end
 
@@ -28,6 +37,10 @@
     
     self.activeFriend = nil;
     self.friendsArray = [FriendData defaultFriends];
+    
+    self.dataManager = [[DataManager alloc] init];
+    self.dataManager.delegate = self;
+    [self.dataManager loadFriendListForAccount:@"Best friend"];
 }
 
 #pragma mark - TableView
@@ -99,6 +112,76 @@
                                                         animated:true];
     }];
 }
+
+#pragma mark - DataManagerDelegate
+
+- (void)dataManagerDidEndLoadFriendList:(NSArray *)friendList
+{
+    self.friendsArray = friendList;
+                         
+    [self.friendsList reloadData];
+    
+    for (FriendData *friend in self.friendsArray)
+    {
+        [self.dataManager loadFriendDataForName:friend.name];
+    }
+}
+
+- (void)dataManagerDidEndLoadFriendData:(FriendData *)friendData
+{
+    for (FriendData *data in self.friendsArray)
+    {
+        if ([friendData.name isEqualToString:friendData.name])
+        {
+            data.imageURL = friendData.imageURL;
+            data.gifts = friendData.gifts;
+            
+            [self.dataManager loadGiftDateForName:[friendData.gifts.firstObject name]];
+            
+            [self.dataManager loadImageForURL:data.imageURL];
+                          
+            [self.friendsList reloadData];
+            
+            return;
+        }
+    }
+}
+
+- (void)dataManagerDidEndLoadGift:(Gift *)gift
+{
+    FriendData *friend = self.friendsArray.firstObject;
+    friend.gifts = @[gift];
+    
+    [self.friendsList reloadData];
+}
+
+- (void)dataManagerDidEndLoadImage:(UIImage *)image forURL:(NSString *)url
+{
+    for (FriendData *data in self.friendsArray)
+    {
+        if ([data.imageURL isEqualToString:url])
+        {
+            data.friendImage = image;
+            
+            [self.friendsList reloadData];
+        }
+    }
+    
+    FriendData *friend = self.friendsArray.firstObject;
+    Gift *gift = friend.gifts.firstObject;
+    
+    if ([gift.imageURL isEqualToString:url])
+    {
+         gift.image = image;
+    }
+    
+    [self.friendsList reloadData];
+    
+    
+}
+
+#pragma mark - Additional methods
+
 - (IBAction)pushNotification:(UIBarButtonItem *)sender
 {
     // This use just for show how push notification will work in complete application

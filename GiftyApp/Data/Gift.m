@@ -10,6 +10,14 @@
 
 @implementation Gift
 
++ (Gift *)giftWithName:(NSString *)name
+{
+    Gift *gift = [[Gift alloc] init];
+    gift.name = name;
+    
+    return gift;
+}
+
 + (Gift *)defaultGift
 {
     Gift *gift = [[Gift alloc] init];

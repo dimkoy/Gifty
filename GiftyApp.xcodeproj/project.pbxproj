@@ -13,6 +13,7 @@
 		2C01DE942049B64D0066379C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C01DE932049B64D0066379C /* Assets.xcassets */; };
 		2C01DE972049B64D0066379C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C01DE952049B64D0066379C /* LaunchScreen.storyboard */; };
 		2C01DE9A2049B64D0066379C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C01DE992049B64D0066379C /* main.m */; };
+		2C86BCFD205D815F006AF29C /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C86BCFC205D815F006AF29C /* DataManager.m */; };
 		2CD13B41204BB506002D32A4 /* FriendData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD13B40204BB506002D32A4 /* FriendData.m */; };
 		2CD13B45204BB595002D32A4 /* Gift.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD13B44204BB595002D32A4 /* Gift.m */; };
 		2CD13B49204BBD1F002D32A4 /* MainScreenCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD13B47204BBD1F002D32A4 /* MainScreenCell.m */; };
@@ -34,6 +35,9 @@
 		2C01DE962049B64D0066379C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C01DE982049B64D0066379C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C01DE992049B64D0066379C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2C86BCFB205D815F006AF29C /* DataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		2C86BCFC205D815F006AF29C /* DataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		2C86BCFE205D84FF006AF29C /* DataManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManagerDelegate.h; sourceTree = "<group>"; };
 		2CD13B3F204BB506002D32A4 /* FriendData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendData.h; sourceTree = "<group>"; };
 		2CD13B40204BB506002D32A4 /* FriendData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendData.m; sourceTree = "<group>"; };
 		2CD13B43204BB595002D32A4 /* Gift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Gift.h; sourceTree = "<group>"; };
@@ -85,6 +89,9 @@
 				2C01DE8B2049B64D0066379C /* AppDelegate.m */,
 				2C01DE8D2049B64D0066379C /* ViewController.h */,
 				2C01DE8E2049B64D0066379C /* ViewController.m */,
+				2C86BCFB205D815F006AF29C /* DataManager.h */,
+				2C86BCFC205D815F006AF29C /* DataManager.m */,
+				2C86BCFE205D84FF006AF29C /* DataManagerDelegate.h */,
 				2CD13B42204BB580002D32A4 /* Data */,
 				2C01DE902049B64D0066379C /* Main.storyboard */,
 				2CD13B4B204BBD29002D32A4 /* Views */,
@@ -269,6 +276,7 @@
 				2CD13B41204BB506002D32A4 /* FriendData.m in Sources */,
 				2C01DE9A2049B64D0066379C /* main.m in Sources */,
 				2CD13B49204BBD1F002D32A4 /* MainScreenCell.m in Sources */,
+				2C86BCFD205D815F006AF29C /* DataManager.m in Sources */,
 				2CD13B4E204BBE34002D32A4 /* GiftMainView.m in Sources */,
 				2C01DE8C2049B64D0066379C /* AppDelegate.m in Sources */,
 			);

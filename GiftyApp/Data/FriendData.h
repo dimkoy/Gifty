@@ -13,8 +13,11 @@
 @interface FriendData : NSObject
 
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *imageURL;
 @property (nonatomic, strong) UIImage *friendImage;
 @property (nonatomic, strong) NSArray *gifts;
+
++ (FriendData *)friendDataWithName:(NSString *)name;
 
 + (NSArray *)defaultFriends;
 

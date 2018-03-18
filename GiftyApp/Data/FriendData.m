@@ -11,6 +11,14 @@
 
 @implementation FriendData
 
++ (FriendData *)friendDataWithName:(NSString *)name
+{
+    FriendData *friendData = [[FriendData alloc] init];
+    friendData.name = name;
+    
+    return friendData;
+}
+
 + (NSArray *)defaultFriends
 {
     NSMutableArray *array = [NSMutableArray array];

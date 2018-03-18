@@ -50,6 +50,8 @@
     [self.progressGift setMaximumTrackTintColor:UIColor.grayColor];
     self.progressGift.userInteractionEnabled = false;
     self.friendImageView.image = [UIImage imageNamed:@"friend_image"];
+    self.friendImageView.layer.cornerRadius = CGRectGetHeight(self.friendImageView.frame) / 2;
+    self.friendImageView.clipsToBounds = true;
 }
 
 #pragma mark - Interface
@@ -62,6 +64,7 @@
 - (void)fillCellWithData:(FriendData *)friendEntity
 {
     self.nameLabel.text = friendEntity.name;
+    self.friendImageView.image = friendEntity.friendImage;
    
     Gift *gift = friendEntity.gifts.firstObject;
     self.giftNameLabel.text = gift.name;

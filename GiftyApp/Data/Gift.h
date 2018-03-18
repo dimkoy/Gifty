@@ -13,9 +13,12 @@
 @interface Gift : NSObject
 
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *imageURL;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, assign) NSInteger value;
 @property (nonatomic, assign) NSInteger currentValue;
+
++ (Gift *)giftWithName:(NSString *)name;
 
 + (Gift *)defaultGift;
 

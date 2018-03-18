@@ -8,6 +8,6 @@ target 'GiftyApp' do
   # Pods for GiftyApp
   pod 'Firebase/Core'
   pod 'Firebase/Database'
-  pod 'YandexMoneySDKObjc'
+  pod 'Firebase/Storage'
 
 end
