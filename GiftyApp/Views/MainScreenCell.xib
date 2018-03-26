@@ -41,8 +41,8 @@
                                     <constraint firstAttribute="width" constant="240" id="s54-Wp-z3g"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Цена:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gVe-8h-nni">
-                                <rect key="frame" x="26" y="220" width="60" height="21.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gVe-8h-nni">
+                                <rect key="frame" x="26" y="220" width="60" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="cIa-sS-Qg2"/>
                                 </constraints>
@@ -66,7 +66,7 @@
                                     <constraint firstAttribute="height" constant="44" id="KuN-ZV-JMk"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                <state key="normal" title="Подарить">
+                                <state key="normal" title="Gift">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>

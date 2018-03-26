@@ -13,12 +13,12 @@
 		2C01DE942049B64D0066379C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C01DE932049B64D0066379C /* Assets.xcassets */; };
 		2C01DE972049B64D0066379C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C01DE952049B64D0066379C /* LaunchScreen.storyboard */; };
 		2C01DE9A2049B64D0066379C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C01DE992049B64D0066379C /* main.m */; };
+		2C0DCC4B2066CB2A002B3BB8 /* FriendDataLoadingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0DCC4A2066CB2A002B3BB8 /* FriendDataLoadingOperation.m */; };
 		2C86BCFD205D815F006AF29C /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C86BCFC205D815F006AF29C /* DataManager.m */; };
 		2CD13B41204BB506002D32A4 /* FriendData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD13B40204BB506002D32A4 /* FriendData.m */; };
 		2CD13B45204BB595002D32A4 /* Gift.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD13B44204BB595002D32A4 /* Gift.m */; };
 		2CD13B49204BBD1F002D32A4 /* MainScreenCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD13B47204BBD1F002D32A4 /* MainScreenCell.m */; };
 		2CD13B4A204BBD1F002D32A4 /* MainScreenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CD13B48204BBD1F002D32A4 /* MainScreenCell.xib */; };
-		2CD13B4E204BBE34002D32A4 /* GiftMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD13B4D204BBE34002D32A4 /* GiftMainView.m */; };
 		D87B17323463E4ABDBA8B80A /* libPods-GiftyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 283F9AAD6B8450A92AACA6EA /* libPods-GiftyApp.a */; };
 		F9D29A64205D279F00AED3D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9D29A63205D279F00AED3D3 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -35,6 +35,8 @@
 		2C01DE962049B64D0066379C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C01DE982049B64D0066379C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C01DE992049B64D0066379C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2C0DCC492066CB2A002B3BB8 /* FriendDataLoadingOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendDataLoadingOperation.h; sourceTree = "<group>"; };
+		2C0DCC4A2066CB2A002B3BB8 /* FriendDataLoadingOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendDataLoadingOperation.m; sourceTree = "<group>"; };
 		2C86BCFB205D815F006AF29C /* DataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		2C86BCFC205D815F006AF29C /* DataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		2C86BCFE205D84FF006AF29C /* DataManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManagerDelegate.h; sourceTree = "<group>"; };
@@ -45,8 +47,6 @@
 		2CD13B46204BBD1F002D32A4 /* MainScreenCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainScreenCell.h; sourceTree = "<group>"; };
 		2CD13B47204BBD1F002D32A4 /* MainScreenCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainScreenCell.m; sourceTree = "<group>"; };
 		2CD13B48204BBD1F002D32A4 /* MainScreenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainScreenCell.xib; sourceTree = "<group>"; };
-		2CD13B4C204BBE34002D32A4 /* GiftMainView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GiftMainView.h; sourceTree = "<group>"; };
-		2CD13B4D204BBE34002D32A4 /* GiftMainView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GiftMainView.m; sourceTree = "<group>"; };
 		D96856F9148FA2247CD612F8 /* Pods-GiftyApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GiftyApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-GiftyApp/Pods-GiftyApp.release.xcconfig"; sourceTree = "<group>"; };
 		EAF36ED19F201A5308136EB8 /* Pods-GiftyApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GiftyApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GiftyApp/Pods-GiftyApp.debug.xcconfig"; sourceTree = "<group>"; };
 		F9D29A63205D279F00AED3D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -92,6 +92,7 @@
 				2C86BCFB205D815F006AF29C /* DataManager.h */,
 				2C86BCFC205D815F006AF29C /* DataManager.m */,
 				2C86BCFE205D84FF006AF29C /* DataManagerDelegate.h */,
+				2C0DCC4C2066CB3C002B3BB8 /* DataManagerOperation */,
 				2CD13B42204BB580002D32A4 /* Data */,
 				2C01DE902049B64D0066379C /* Main.storyboard */,
 				2CD13B4B204BBD29002D32A4 /* Views */,
@@ -101,6 +102,15 @@
 				2C01DE992049B64D0066379C /* main.m */,
 			);
 			path = GiftyApp;
+			sourceTree = "<group>";
+		};
+		2C0DCC4C2066CB3C002B3BB8 /* DataManagerOperation */ = {
+			isa = PBXGroup;
+			children = (
+				2C0DCC492066CB2A002B3BB8 /* FriendDataLoadingOperation.h */,
+				2C0DCC4A2066CB2A002B3BB8 /* FriendDataLoadingOperation.m */,
+			);
+			path = DataManagerOperation;
 			sourceTree = "<group>";
 		};
 		2CD13B42204BB580002D32A4 /* Data */ = {
@@ -120,8 +130,6 @@
 				2CD13B46204BBD1F002D32A4 /* MainScreenCell.h */,
 				2CD13B47204BBD1F002D32A4 /* MainScreenCell.m */,
 				2CD13B48204BBD1F002D32A4 /* MainScreenCell.xib */,
-				2CD13B4C204BBE34002D32A4 /* GiftMainView.h */,
-				2CD13B4D204BBE34002D32A4 /* GiftMainView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -271,13 +279,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C0DCC4B2066CB2A002B3BB8 /* FriendDataLoadingOperation.m in Sources */,
 				2CD13B45204BB595002D32A4 /* Gift.m in Sources */,
 				2C01DE8F2049B64D0066379C /* ViewController.m in Sources */,
 				2CD13B41204BB506002D32A4 /* FriendData.m in Sources */,
 				2C01DE9A2049B64D0066379C /* main.m in Sources */,
 				2CD13B49204BBD1F002D32A4 /* MainScreenCell.m in Sources */,
 				2C86BCFD205D815F006AF29C /* DataManager.m in Sources */,
-				2CD13B4E204BBE34002D32A4 /* GiftMainView.m in Sources */,
 				2C01DE8C2049B64D0066379C /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,12 +421,14 @@
 			baseConfigurationReference = EAF36ED19F201A5308136EB8 /* Pods-GiftyApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 292K3XX9N4;
 				INFOPLIST_FILE = GiftyApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Dmitriy.GiftyApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -428,12 +438,14 @@
 			baseConfigurationReference = D96856F9148FA2247CD612F8 /* Pods-GiftyApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 292K3XX9N4;
 				INFOPLIST_FILE = GiftyApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Dmitriy.GiftyApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

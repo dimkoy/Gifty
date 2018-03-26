@@ -11,19 +11,27 @@
 
 @interface MainScreenCell ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *friendImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UIView *giftView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *giftViewConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *giftNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *valueLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *giftImageView;
-@property (weak, nonatomic) IBOutlet UISlider *progressGift;
 @property (weak, nonatomic) IBOutlet UILabel *costLabel;
-@property (weak, nonatomic) IBOutlet UIButton *giftButton;
 @property (weak, nonatomic) IBOutlet UILabel *alreadyValueLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *friendImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *giftImageView;
+
+@property (weak, nonatomic) IBOutlet UIView *giftView;
+@property (weak, nonatomic) IBOutlet UISlider *progressGift;
+@property (weak, nonatomic) IBOutlet UIButton *giftButton;
+
+
+/**
+ Used to animate expand animation of a selected cell
+ */
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *giftViewConstraint;
+
 @property (nonatomic, strong) FriendData *data;
+
 
 @end
 
@@ -43,12 +51,14 @@
     self.giftView.layer.shadowOpacity = 1.0;
     self.giftView.layer.shadowOffset = CGSizeMake(1.0f, 6.0f);
     
+    // UISlider used as progress bar, so we need to replace default thumb to a dot image
     UIImage *image = [UIImage imageNamed:@"rectangle_dot"];
     
     [self.progressGift setThumbImage:image forState:UIControlStateNormal];
     [self.progressGift setMinimumTrackTintColor:UIColor.greenColor];
     [self.progressGift setMaximumTrackTintColor:UIColor.grayColor];
     self.progressGift.userInteractionEnabled = false;
+    
     self.friendImageView.image = [UIImage imageNamed:@"friend_image"];
     self.friendImageView.layer.cornerRadius = CGRectGetHeight(self.friendImageView.frame) / 2;
     self.friendImageView.clipsToBounds = true;
@@ -69,12 +79,10 @@
     Gift *gift = friendEntity.gifts.firstObject;
     self.giftNameLabel.text = gift.name;
     self.valueLabel.text = [NSString stringWithFormat:@"%@", @(gift.value)];
+    self.alreadyValueLabel.text = [NSString stringWithFormat:@"%@ current value", @(gift.currentValue)];
     self.giftImageView.image = gift.image;
     self.progressGift.maximumValue = gift.value;
     [self.progressGift setValue:gift.currentValue animated:true];
-    
-    self.alreadyValueLabel.text = [NSString stringWithFormat:@"%@ собранно", @(gift.currentValue)];
-    
 }
 
 - (NSString *)friendName
@@ -108,23 +116,9 @@
     [self layoutIfNeeded];
 }
 
-- (void)setGiftSectionHidden:(BOOL)hidden
-{
-    self.giftView.hidden = hidden;
-    self.giftNameLabel.hidden = hidden;
-    self.giftImageView.hidden = hidden;
-    self.progressGift.hidden = hidden;
-    self.costLabel.hidden = hidden;
-    self.valueLabel.hidden = hidden;
-    self.giftButton.hidden = hidden;
-    self.alreadyValueLabel.hidden = hidden;
-}
-
 - (IBAction)giftButtonTapped:(UIButton *)sender
 {
-    
+    // TODO: (Chervyakov) add 2 labels and 2 text fields with amount of presented money and name of presenter. Also need to add second state to the cell, and changeStateAnimated:(BOOL)animated method that will provide state switching with animation or not
 }
-
-
 
 @end

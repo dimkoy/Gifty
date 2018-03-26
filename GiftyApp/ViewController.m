@@ -27,6 +27,8 @@
 
 @property (nonatomic, strong) DataManager *dataManager;
 
+@property (nonatomic, assign) BOOL usersImage;
+
 @end
 
 @implementation ViewController
@@ -38,7 +40,7 @@
     self.activeFriend = nil;
     self.friendsArray = [FriendData defaultFriends];
     
-    self.dataManager = [[DataManager alloc] init];
+    self.dataManager = [DataManager sharedInstance];
     self.dataManager.delegate = self;
     [self.dataManager loadFriendListForAccount:@"Best friend"];
 }
@@ -61,7 +63,7 @@
     
     if (friend == self.activeFriend)
     {
-        [cell showGiftsAnimated:true];
+        [cell showGiftsAnimated:false];
     }
     else
     {
@@ -131,16 +133,17 @@
 {
     for (FriendData *data in self.friendsArray)
     {
-        if ([friendData.name isEqualToString:friendData.name])
+        if ([data.name isEqualToString:friendData.name])
         {
             data.imageURL = friendData.imageURL;
             data.gifts = friendData.gifts;
             
-            [self.dataManager loadGiftDateForName:[friendData.gifts.firstObject name]];
+            for (Gift *gift in data.gifts)
+            {
+                [self.dataManager loadGiftDataForName:gift.name];
+            }
             
             [self.dataManager loadImageForURL:data.imageURL];
-                          
-            [self.friendsList reloadData];
             
             return;
         }
@@ -148,43 +151,73 @@
 }
 
 - (void)dataManagerDidEndLoadGift:(Gift *)gift
-{
-    FriendData *friend = self.friendsArray.firstObject;
-    friend.gifts = @[gift];
-    
-    [self.friendsList reloadData];
+{    
+    for (FriendData *friend in self.friendsArray)
+    {
+        for (Gift *friendGift in friend.gifts)
+        {
+            if ([friendGift.name isEqualToString:gift.name])
+            {
+                friendGift.value = gift.value;
+                friendGift.currentValue = gift.currentValue;
+                friendGift.imageURL = gift.imageURL;
+                                       
+                [self.dataManager loadImageForURL:gift.imageURL];
+                
+                if ([friend.name isEqualToString:self.activeFriend.name])
+                {
+                    [self.friendsList reloadData];
+                }
+            }
+        }
+    }
 }
 
 - (void)dataManagerDidEndLoadImage:(UIImage *)image forURL:(NSString *)url
 {
+    self.usersImage = false;
+    
     for (FriendData *data in self.friendsArray)
     {
         if ([data.imageURL isEqualToString:url])
         {
             data.friendImage = image;
             
-            [self.friendsList reloadData];
+            self.usersImage = true;
         }
     }
     
-    FriendData *friend = self.friendsArray.firstObject;
-    Gift *gift = friend.gifts.firstObject;
-    
-    if ([gift.imageURL isEqualToString:url])
+    if (self.usersImage)
     {
-         gift.image = image;
+        [self.friendsList reloadData];
+        
+        return;
     }
     
-    [self.friendsList reloadData];
+    // Now users have equal gifts, so is the reason why we doesn't return after first founded gift. Solution of this bag - add to the gifts an uniqe id
     
-    
+    for (FriendData *friend in self.friendsArray)
+    {
+        for (Gift *friendGift in friend.gifts)
+        {
+            if ([friendGift.imageURL isEqualToString:url])
+            {
+                friendGift.image = image;
+                
+                if ([friend.name isEqualToString:self.activeFriend.name])
+                {
+                    [self.friendsList reloadData];
+                }
+            }
+        }
+    }
 }
 
 #pragma mark - Additional methods
 
 - (IBAction)pushNotification:(UIBarButtonItem *)sender
 {
-    // This use just for show how push notification will work in complete application
+    // This use just for show how push notification will work in complete application. Push is just an image for 5th iphone screen size
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^

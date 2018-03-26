@@ -11,6 +11,9 @@
 #import "FriendData.h"
 #import "Gift.h"
 
+#import "FriendDataLoadingOperation.h"
+
+@import UIKit;
 @import Firebase;
 @import FirebaseStorage;
 
@@ -18,9 +21,30 @@
 
 @property (strong, nonatomic) FIRDatabaseReference *dataBase;
 
+@property (nonatomic, strong) NSOperationQueue *friendDataQueue;
+@property (nonatomic, strong) NSOperationQueue *giftDataQueue;
+@property (nonatomic, strong) NSOperationQueue *imageQueue;
+
 @end
 
 @implementation DataManager
+
+#pragma mark - Init
+
++ (instancetype)sharedInstance
+{
+    static DataManager *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^
+    {
+        sharedInstance = [[DataManager alloc] init];
+    });
+    
+    return sharedInstance;
+}
+
+#pragma mark - Internal
 
 - (FIRDatabaseReference *)dataBase
 {
@@ -29,6 +53,17 @@
         _dataBase = [[FIRDatabase database] reference];
     }
     return _dataBase;
+}
+
+- (NSOperationQueue *)initializeQueueIfNeeded:(NSOperationQueue *)queue
+{
+    if (queue == nil)
+    {
+        queue = [[NSOperationQueue alloc] init];
+        queue.maxConcurrentOperationCount = 100;
+    }
+    
+    return queue;
 }
 
 #pragma mark - interface
@@ -40,7 +75,6 @@
   observeSingleEventOfType:FIRDataEventTypeValue
                  withBlock:^(FIRDataSnapshot * _Nonnull snapshot)
     {
-        // Get user value
         NSDictionary *friendDictionaryList = [NSDictionary dictionaryWithDictionary:snapshot.value[@"friendList"]];
         
         NSMutableArray *friendList = [NSMutableArray arrayWithCapacity:friendDictionaryList.count];
@@ -62,69 +96,46 @@
 
 - (void)loadFriendDataForName:(NSString *)name
 {
-    [[[self.dataBase child:@"users"]
-                     child:name]
-  observeSingleEventOfType:FIRDataEventTypeValue
-                 withBlock:^(FIRDataSnapshot * _Nonnull snapshot)
-     {
-         FriendData *friend = [FriendData friendDataWithName:name];
-         friend.imageURL = snapshot.value[@"image"];
-         
-         
-         NSDictionary *friendDictionaryList = [NSDictionary dictionaryWithDictionary:snapshot.value[@"gifts"]];
-         NSMutableArray *gifts = [NSMutableArray arrayWithCapacity:friendDictionaryList.count];
-         
-         for (NSString *giftName in [friendDictionaryList allValues])
-         {
-             Gift *gift = [Gift giftWithName:giftName];
-             
-             [gifts addObject:gift];
-         }
-         
-         friend.gifts = [NSArray arrayWithArray:gifts];
-         
-         [self.delegate dataManagerDidEndLoadFriendData:friend];
-     }];
+    self.friendDataQueue = [self initializeQueueIfNeeded:self.friendDataQueue];
+    
+    FriendDataLoadingOperation *operation = [[FriendDataLoadingOperation alloc] init];
+    operation.type = FriendDataLoadingOperationTypeFriendData;
+    operation.loadingItemName = name;
+    operation.delegate = self.delegate;
+     
+    [self.friendDataQueue addOperation:operation];
 }
 
-- (void)loadGiftDateForName:(NSString *)name
+- (void)loadGiftDataForName:(NSString *)name
 {
-    [[[self.dataBase child:@"gifts"]
-      child:name]
-     observeSingleEventOfType:FIRDataEventTypeValue
-     withBlock:^(FIRDataSnapshot * _Nonnull snapshot)
-     {
-         Gift *gift = [Gift giftWithName:name];
-         gift.imageURL = snapshot.value[@"image"];
-         gift.value = [(NSString *)snapshot.value[@"value"] intValue];
-         gift.currentValue = [(NSString *)snapshot.value[@"currentValue"] intValue];
-         
-         [self loadImageForURL:gift.imageURL];
-         
-         [self.delegate dataManagerDidEndLoadGift:gift];
-     }];
+    self.giftDataQueue = [self initializeQueueIfNeeded:self.giftDataQueue];
+    
+    FriendDataLoadingOperation *operation = [[FriendDataLoadingOperation alloc] init];
+    operation.type = FriendDataLoadingOperationTypeGiftData;
+    operation.loadingItemName = name;
+    operation.delegate = self.delegate;
+    
+    [self.giftDataQueue addOperation:operation];
 }
 
 - (void)loadImageForURL:(NSString *)imageURL
 {
-    FIRStorage *storage = [FIRStorage storage];
+    self.imageQueue = [self initializeQueueIfNeeded:self.imageQueue];
     
-    FIRStorageReference *httpsReference = [storage referenceForURL:imageURL];
-    
-    [httpsReference dataWithMaxSize:1 * 1024 * 1024 completion:^(NSData *data, NSError *error){
-        if (error != nil) {
-            // Uh-oh, an error occurred!
-        }
-        else
+    for (FriendDataLoadingOperation *operation in self.imageQueue.operations)
+    {
+        if ([operation.loadingItemName isEqual:imageURL])
         {
-            // Data for "images/island.jpg" is returned
-            UIImage *image = [UIImage imageWithData:data];
-            
-            [self.delegate dataManagerDidEndLoadImage:image forURL:imageURL];
+            return;
         }
-    }];
+    }
     
+    FriendDataLoadingOperation *operation = [[FriendDataLoadingOperation alloc] init];
+    operation.type = FriendDataLoadingOperationTypeImage;
+    operation.loadingItemName = imageURL;
+    operation.delegate = self.delegate;
     
+    [self.imageQueue addOperation:operation];
 }
 
 @end
